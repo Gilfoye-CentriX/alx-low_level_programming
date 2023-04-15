@@ -1,27 +1,32 @@
 #include <stdio.h>
 #include <stdlib.h>
- /**
-  * main - program that adds positive numbers
-  * @argc: count how many arguments are
-  * @argv: holds the arguments
-  * Return: return 0 if passed otherwise return 1 for error
-  */
+#include <ctype.h>
+
+/**
+ * main - adds positive numbers
+ * @argc: argument count
+ * @argv: argument vector
+ *
+ * Return: 1 if one of the numbers contains symbols that are not digits,
+ * otherwise return 0
+ */
+
 int main(int argc, char *argv[])
 {
-int i, a;
+int a, b, addition = 0;
 
-a = 0;
-
-for (i = 1; i < argc; i++)
+for (a = 1; a < argc; a++)
 {
-a += atoi(argv[i]);
-
-if (a == 199)
+for (b = 0; argv[b][b] != '\0'; b++)
+{
+if (!isdigit(argv[a][b]))
 {
 printf("Error\n");
 return (1);
 }
 }
-printf("%d\n", a);
+addition += atoi(argv[a]);
+}
+printf("%d\n", addition);
 return (0);
 }
