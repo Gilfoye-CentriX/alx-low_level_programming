@@ -1,23 +1,23 @@
 #include "lists.h"
-#include <stdlib.h>
-
 /**
- * add_node - adds a new node at the beginning of a list_t list
- * @head: current position in the list
- * @n: node to add
- * Return: the address of the new element, or NULL if it failed
+ * add_node - functions that adds a new mode at the beginning of list
+ * @head: pointing to the beginning of the string
+ * @str: pointer to the string
+ * Return: the address of the new elements, or NULL if it failed
  */
-
-list_t *add_node(list_t **head, const int n)
+list_t *add_node(list_t **head, const char *str)
 {
-list_t *newNode;
+list_t *adding;
 
-newNode = *head;
-newNode = malloc(sizeof(listint_t));
-if (newNode == NULL)
+adding = malloc(sizeof(list_t));
+
+if (adding == NULL || str == NULL)
 return (NULL);
-newNode->n = n;
-newNode->next = *head;
-*head = newNode;
-return (*head);
+
+adding->str = strdup(str);
+adding->len = strlen(str);
+adding->next = *head;
+*head = adding;
+
+return (adding);
 }
