@@ -1,38 +1,31 @@
 #include "main.h"
-#include <stdio.h>
 #include <stdlib.h>
-
 /**
- * print_tab - Prints an array of string
- * @tab: The array to print
- *
- * Return: nothing
+ * argstostr - concatenates arguments.
+ * @ac: number of string to be concatenated.
+ * @av: strings to be concatenated.
+ * Return: String concatenated.
  */
-void print_tab(char **tab)
+char *argstostr(int ac, char **av)
 {
-	int i;
+	int i, j, k = 0;
+	char *concat = NULL;
 
-	for (i = 0; tab[i] != NULL; ++i)
+	if (ac == 0 || av == NULL)
+		return (NULL);
+	for (i = 0; i < ac; i++)
+		for (j = 0; av[i][j] != '\0'; j++)
+			k++;
+	concat = malloc(sizeof(char) * (k + ac + 1));
+	if (concat == NULL)
+		return (NULL);
+	for (i = 0, k = 0; i < ac; i++)
 	{
-		printf("%s\n", tab[i]);
+		for (j = 0; av[i][j] != '\0'; j++, k++)
+			concat[k] = av[i][j];
+		concat[k] = '\n';
+		k++;
 	}
-}
-
-/**
- * main - check the code for Holberton School students.
- *
- * Return: 1 if an error occurred, 0 otherwise
- */
-int main(void)
-{
-	char **tab;
-
-	tab = strtow("	  Holberton School		 #cisfun	  ");
-	if (tab == NULL)
-	{
-		printf("Failed\n");
-		return (1);
-	}
-	print_tab(tab);
-	return (0);
+	concat[k] = '\0';
+	return (concat);
 }
