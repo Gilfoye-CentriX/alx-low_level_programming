@@ -1,45 +1,45 @@
 #include "search_algos.h"
-void atos(int *array, size_t from, size_t to);
-/**
- * advanced_binary - Binary search for a value in a sorted array
- * @array: it's a pointer to the first element of the array to search in
- * @size: it's the number of elements in array
- * @value: it's the value to search for
- * Return: first index where value is located.
- */
-int advanced_binary(int *array, size_t size, int value)
-{
-	size_t begining = 0, ending = size - 1;
-
-	if (array)
-		while (begining <= ending)
-		{
-			size_t middle = (ending - begining) / 2 + begining;
-
-			atos(array, begining, ending);
-			if (array[middle] == value)
-				return (middle);
-			if (value > array[middle])
-				begining = middle + 1;
-			else
-				ending = middle - 1;
-		}
-	return (-1);
-}
 
 /**
- * atos - Print an array or sub-array
- * @array: it's a pointer to the first element of the array to search in
- * @from: it's the number of elements in array
- * @to: it's the value to search for
- * Return: first index where value is located.
+ * linear_skip - searches for a value in a skip list
+ *
+ * @list: input list
+ * @value: value to search in
+ * Return: index of the number
  */
-void atos(int *array, size_t from, size_t to)
+skiplist_t *linear_skip(skiplist_t *list, int value)
 {
-	size_t i;
+	skiplist_t *go;
 
-	printf("Searching in array: ");
-	for (i = from; i < to; i++)
-		printf("%d, ", array[i]);
-	printf("%d\n", array[i]);
+	if (list == NULL)
+		return (NULL);
+
+	go = list;
+
+	do {
+		list = go;
+		go = go->express;
+		printf("Value checked at index ");
+		printf("[%d] = [%d]\n", (int)go->index, go->n);
+	} while (go->express && go->n < value);
+
+	if (go->express == NULL)
+	{
+		list = go;
+		while (go->next)
+			go = go->next;
+	}
+
+	printf("Value found between indexes ");
+	printf("[%d] and [%d]\n", (int)list->index, (int)go->index);
+
+	while (list != go->next)
+	{
+		printf("Value checked at index [%d] = [%d]\n", (int)list->index, list->n);
+		if (list->n == value)
+			return (list);
+		list = list->next;
+	}
+
+	return (NULL);
 }
